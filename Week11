@@ -1,0 +1,77 @@
+브랜치 병합
+
+• 병합
+- > 두 개의 브랜치를 하나로 모으는 과정
+- > fast-forward(빨리 감기) 병합, 3-awy 병합
+
+• fast-forward 병합 조건
+- > 현재 브랜치 master가 병합할 대상 커밋의 직접적인 뿌리가 되는 경우
+- > 간단히 두 브랜치가 일렬 상태
+- > $git merge 
+
+• fast-forward 병합 수행
+- > master 브랜치는 단순히 이동
+
+       master         bugfix
+A  ----> B ----> X ----> Y
+
+                      master
+A  ----> B ----> X ----> Y
+                      bugfix
+
+• 3-way 상태: 두 분기가 갈라진 상태
+
+• 3-way 병합 수행
+- > 새로운 커밋 E 생성
+
+
+                      master
+A  ----> B ----> C ----> D
+         | ----> X ----> Y
+                      bugfix
+
+                      master
+A  ----> B ----> C ----> D ----> E
+         | ----> X ----> Y ------|
+                      bugfix
+
+• 일렬 상태: 기본 fast-forward, 갈라진 상태: 기본 3-way
+
+• 일렬상태에서 3-way 병합
+- > 옵션 --no--ff
+$git merge dev1 --no--ff (dev1을 fast-forward로 병합)
+
+                                dev1   master
+A  ----> B ----> X ----> Y ----> C ----> D
+         | ------------------------------|
+
+• 병합의 다양한 옵션 종류
+- > $git merge --no--ff
+무조건 3-way 병합되는 옵션
+- > $git merge --ff--only
+일렬 상태일때 반드시 fast-forward 병합
+- > $git merge --squash
+강압적인 병합, 현재 브랜치에 병합 대상과의 합치는 커밋을 하나 생성해 병합
+
+• 병합 충돌
+- > 병합할 두 브랜치 마지막 커밋을 비교
+- > 두 브랜치 모두에서 변경 사항이 달리 발생한 파일
+파일 C는 두 브랜치에서 모두 수정되었으므로 어느 것을 사용해야할지 결정 못하는 상황
+
+• 충돌 해결
+- > 직접 파일 내용을 수정 후 저장
+- > add, commit 진행
+- > 필요하면 합병된 이전 브랜치 삭제
+
+• 충돌한 파일 내부 표시
+<<<<<<< HEAD
+현재 브랜치 HEAD의 수정 내용
+=======
+병합되는 브랜치 feat/list의 수정 내용
+>>>>>>> feat/list
+
+• 병합 취소
+- > $git merge --abort
+• 다시 병합
+- > $git merge feat/list
+  
